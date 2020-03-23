@@ -23,12 +23,14 @@
 
     #footer > div {
       display: flex;
-      font-family: "Comic Sans MS";
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
     }
 
     #time > div {
       flex-direction: column;
       margin: 10px;
+      flex-shrink: 1;
     }
 
     #time > div > span {
@@ -37,35 +39,41 @@
     }
 
     #time {
-      width: 100%;
+      flex-direction: row;
+      display: flex;
     }
 
     #time_container {
       flex-direction: column;
+      flex-grow: 1;
+      align-items: center;
     }
   </style>
   <script>
+    function setTime() {
+      const diff = new Date(2020, 5, 1, 1) - new Date();
+      document.getElementById("seconds").innerText = Math.floor(
+        (diff / 1000) % 60
+      );
+      document.getElementById("minutes").innerText = Math.floor(
+        (diff / 1000 / 60) % 60
+      );
+      document.getElementById("hours").innerText = Math.floor(
+        (diff / (1000 * 60 * 60)) % 24
+      );
+      document.getElementById("days").innerText = Math.floor(
+        diff / (1000 * 60 * 60 * 24)
+      );
+    }
+
     function startTimer() {
-      setInterval(function() {
-        const diff = new Date(2020, 5, 1) - new Date();
-        document.getElementById("seconds").innerText = Math.floor(
-          (diff / 1000) % 60
-        );
-        document.getElementById("minutes").innerText = Math.floor(
-          (diff / 1000 / 60) % 60
-        );
-        document.getElementById("hours").innerText = Math.floor(
-          (diff / (1000 * 60 * 60)) % 24
-        );
-        document.getElementById("days").innerText = Math.floor(
-          diff / (1000 * 60 * 60 * 24)
-        );
-      }, 1000);
+      setInterval(setTime, 1000);
     }
 
     window.onload = function() {
       var fiveMinutes = 60 * 5,
         display = document.querySelector("#time");
+      setTime();
       startTimer();
     };
   </script>
@@ -83,25 +91,28 @@
     <div id="footer">
       <div><img src="img/binnen.jpeg" width="200" height="200" /></div>
       <div id="time_container">
-        <p>Nog</p>
+        <h2>Nog</h2>
         <div id="time">
           <div>
-            <span id="days"></span>
+            <span id="days">00</span>
             <span>Dagen</span>
           </div>
           <div>
-            <span id="hours"></span>
+            <span id="hours">00</span>
             <span>Uur</span>
           </div>
           <div>
-            <span id="minutes"></span>
+            <span id="minutes">00</span>
             <span>Minuten</span>
           </div>
           <div>
-            <span id="seconds"></span>
+            <span id="seconds">00</span>
             <span>Seconden</span>
           </div>
         </div>
+        <h3>
+          tot 1 juno. Tot die tijd: #blijfbinnen
+        </h3>
       </div>
       <div><img src="img/review.jpeg" height="200" /></div>
     </div>
